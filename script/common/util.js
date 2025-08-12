@@ -213,6 +213,10 @@ export default class DarkHeresyUtil {
 
     static getFocusPowerTarget(actor, psychicPower) {
         const normalizeName = psychicPower.focusPower.test.toLowerCase();
+        // Always prefer Psionics (Psi) as the focus power characteristic
+        if (actor.characteristics?.influence?.short === "Psi") {
+            return actor.characteristics.influence;
+        }
         if (actor.characteristics.hasOwnProperty(normalizeName)) {
             return actor.characteristics[normalizeName];
         } else if (actor.skills.hasOwnProperty(normalizeName)) {

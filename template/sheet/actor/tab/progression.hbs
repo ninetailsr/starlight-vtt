@@ -168,7 +168,7 @@
                 <b class="starter">{{localize "SKILL.STARTER"}}</b>
             </div>
             <div class="items">
-                {{#each system.skills as |skill key|}}
+                {{#each system.skillsFiltered as |skill key|}}
                     {{#unless skill.isSpecialist}}
                         <div class="skill item flex row">
                             <div class="name">{{localize skill.label}}</div>
@@ -181,21 +181,23 @@
                         </div>
                     {{/unless}}
                 {{/each}}
-                {{#each system.skills as |skill key|}}
-                    {{#if skill.isSpecialist}}
+                {{#each system.skillsFiltered as |skill key|}}
+                    {{#if (and skill.isSpecialist (ne key "lore"))}}
                         <div class="flex header">
                             <b class="name">{{localize skill.label}}</b>
                         </div>
                         {{#each skill.specialities as |speciality keySpe|}}
-                            <div class="speciality item flex row">
-                                <div class="name">{{localize speciality.label}}</div>
-                                <select class="advance" name="system.skills.{{key}}.specialities.{{keySpe}}.advance" data-dtype="Number">
-                                    {{selectOptions (config "advanceStagesSkills") selected=speciality.advance localize=true}}
-                                </select>
-                                <input class="total" name="system.skills.{{key}}.specialities.{{keySpe}}.total" type="number" value="{{speciality.total}}" data-dtype="Number" disabled />
-                                <input class="cost" name="system.skills.{{key}}.specialities.{{keySpe}}.cost" type="number" value="{{speciality.cost}}" data-dtype="Number" />
-                                <input class="starter" name="system.skills.{{key}}.specialities.{{keySpe}}.starter" type="checkbox" {{#if speciality.starter}}checked{{/if}} data-dtype="Boolean" />
-                            </div>
+                            {{#if speciality.label}}
+                                <div class="speciality item flex row">
+                                    <div class="name">{{localize speciality.label}}</div>
+                                    <select class="advance" name="system.skills.{{key}}.specialities.{{keySpe}}.advance" data-dtype="Number">
+                                        {{selectOptions (config "advanceStagesSkills") selected=speciality.advance localize=true}}
+                                    </select>
+                                    <input class="total" name="system.skills.{{key}}.specialities.{{keySpe}}.total" type="number" value="{{speciality.total}}" data-dtype="Number" disabled />
+                                    <input class="cost" name="system.skills.{{key}}.specialities.{{keySpe}}.cost" type="number" value="{{speciality.cost}}" data-dtype="Number" />
+                                    <input class="starter" name="system.skills.{{key}}.specialities.{{keySpe}}.starter" type="checkbox" {{#if speciality.starter}}checked{{/if}} data-dtype="Boolean" />
+                                </div>
+                            {{/if}}
                         {{/each}}
                     {{/if}}
                 {{/each}}

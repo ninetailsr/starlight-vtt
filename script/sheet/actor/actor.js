@@ -1,4 +1,4 @@
-import {prepareCommonRoll, prepareCombatRoll, preparePsychicPowerRoll} from "../../common/dialog.js";
+import { prepareCommonRoll, prepareCombatRoll, preparePsychicPowerRoll } from "../../common/dialog.js";
 import DarkHeresyUtil from "../../common/util.js";
 
 export class DarkHeresySheet extends ActorSheet {
@@ -11,8 +11,7 @@ export class DarkHeresySheet extends ActorSheet {
         html.find(".roll-characteristic").click(async ev => await this._prepareRollCharacteristic(ev));
         html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
         html.find(".roll-speciality").click(async ev => await this._prepareRollSpeciality(ev));
-        html.find(".roll-insanity").click(async ev => await this._prepareRollInsanity(ev));
-        html.find(".roll-corruption").click(async ev => await this._prepareRollCorruption(ev));
+        // Removed Insanity and Corruption roll handlers
         html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
         html.find(".roll-psychic-power").click(async ev => await this._prepareRollPsychicPower(ev));
     }
@@ -21,6 +20,41 @@ export class DarkHeresySheet extends ActorSheet {
     async getData() {
         const data = super.getData();
         data.system = data.data.system;
+        // Build filtered skills view and alias Common Lore -> Lore
+        try {
+            const skills = data.system.skills || {};
+            const removedKeys = new Set(["forbiddenLore", "linguistics", "scholasticLore", "lore"]);
+            const filteredSkills = {};
+            // Copy all except removed
+            for (const [key, value] of Object.entries(skills)) {
+                if (removedKeys.has(key)) continue;
+                // Skip legacy commonLore; we'll alias it to lore below
+                if (key === "commonLore") continue;
+                filteredSkills[key] = value;
+            }
+            // Remove Lore entirely (both legacy commonLore and any lore alias)
+            // Ensure Navigate, Operate, and Trade are treated as normal (non-specialist) skills in the UI
+            const normalizeToNonSpecialist = (key, defaultChars) => {
+                if (!skills[key]) return;
+                const s = foundry.utils.duplicate(skills[key]);
+                s.isSpecialist = false;
+                s.specialities = {};
+                if (!Array.isArray(s.characteristics) || s.characteristics.length === 0) {
+                    s.characteristics = defaultChars;
+                }
+                if (typeof s.advance !== "number") s.advance = -20;
+                if (typeof s.cost !== "number") s.cost = 0;
+                if (typeof s.starter !== "boolean") s.starter = false;
+                filteredSkills[key] = s;
+            };
+            normalizeToNonSpecialist("navigate", ["Int"]);
+            normalizeToNonSpecialist("operate", ["Ag"]);
+            normalizeToNonSpecialist("trade", ["Int"]);
+            data.system.skillsFiltered = filteredSkills;
+        } catch (e) {
+            console.warn("Failed to build filtered skills:", e);
+            data.system.skillsFiltered = data.system.skills;
+        }
         data.items = this.constructItemLists(data);
         data.enrichment = await this._enrichment();
         return data;
@@ -29,9 +63,9 @@ export class DarkHeresySheet extends ActorSheet {
     async _enrichment() {
         let enrichment = {};
         if (this.actor.type !== "npc") {
-            enrichment["system.bio.notes"] = await TextEditor.enrichHTML(this.actor.system.bio.notes, {async: true});
+            enrichment["system.bio.notes"] = await TextEditor.enrichHTML(this.actor.system.bio.notes, { async: true });
         } else {
-            enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true});
+            enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, { async: true });
         }
         return foundry.utils.expandObject(enrichment);
     }
@@ -120,19 +154,7 @@ export class DarkHeresySheet extends ActorSheet {
         );
     }
 
-    async _prepareRollInsanity(event) {
-        event.preventDefault();
-        await prepareCommonRoll(
-            DarkHeresyUtil.createFearTestRolldata(this.actor)
-        );
-    }
-
-    async _prepareRollCorruption(event) {
-        event.preventDefault();
-        await prepareCommonRoll(
-            DarkHeresyUtil.createMalignancyTestRolldata(this.actor)
-        );
-    }
+    // Removed Insanity and Corruption roll methods
 
     async _prepareRollWeapon(event) {
         event.preventDefault();
@@ -156,9 +178,7 @@ export class DarkHeresySheet extends ActorSheet {
     constructItemLists() {
         let items = {};
         let itemTypes = this.actor.itemTypes;
-        items.mentalDisorders = itemTypes.mentalDisorder;
-        items.malignancies = itemTypes.malignancy;
-        items.mutations = itemTypes.mutation;
+        // Removed mentalDisorder, malignancy, and mutation from item lists
         if (this.actor.type === "npc") {
             items.abilities = itemTypes.talent
                 .concat(itemTypes.trait)

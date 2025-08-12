@@ -1,5 +1,5 @@
 export const migrateWorld = async () => {
-    const schemaVersion = 6;
+    const schemaVersion = 8;
     const worldSchemaVersion = Number(game.settings.get("dark-heresy", "worldSchemaVersion"));
     if (worldSchemaVersion !== schemaVersion && game.user.isGM) {
         ui.notifications.info("Upgrading the world, please wait...");
@@ -37,7 +37,8 @@ const migrateActorData = (actor, worldSchemaVersion) => {
             let advance = -20;
             let total = characteristic.total + advance;
 
-            actor.data.data.skills.forbiddenLore.specialities.officioAssassinorum = {
+            if (actor.data.data.skills?.forbiddenLore?.specialities) {
+                actor.data.data.skills.forbiddenLore.specialities.officioAssassinorum = {
                 label: "Officio Assassinorum",
                 isKnown: false,
                 advance: advance,
@@ -73,8 +74,24 @@ const migrateActorData = (actor, worldSchemaVersion) => {
                 cost: 0
             };
             update["system.skills.forbiddenLore"] = actor.data.data.skills.forbiddenLore;
+            }
         }
 
+    }
+
+    // v7: Remove Linguistics, Forbidden Lore, Scholastic Lore; (originally renamed Common Lore -> Lore)
+    if (worldSchemaVersion < 7) {
+        if (actor.type === "acolyte" || actor.type === "npc") {
+            const skills = actor.data.data.skills || {};
+            const updateSkills = foundry.utils.duplicate(skills);
+            // Remove
+            delete updateSkills.forbiddenLore;
+            delete updateSkills.linguistics;
+            delete updateSkills.scholasticLore;
+            // Remove Common Lore (no Lore alias)
+            delete updateSkills.commonLore;
+            update["system.skills"] = updateSkills;
+        }
     }
 
     // // migrate aptitudes
@@ -130,6 +147,44 @@ const migrateActorData = (actor, worldSchemaVersion) => {
             if (actor.system.bio?.notes) {
                 actor.system.notes = actor.system.bio.notes;
             }
+        }
+    }
+
+    // v8: Normalize Navigate to a non-specialist Int-based skill (remove specialities) and remove Lore
+    if (worldSchemaVersion < 8) {
+        if (actor.type === "acolyte" || actor.type === "npc") {
+            const skills = actor.data.data.skills || {};
+            // Remove any existing lore key if present
+            if (skills.lore) {
+                update["system.skills.-=lore"] = null;
+            }
+            // Rename aptitude references Psyker -> Psychic in characteristics/skills
+            const characteristics = actor.data.data.characteristics || {};
+            for (const ch of Object.values(characteristics)) {
+                if (Array.isArray(ch.aptitudes)) {
+                    ch.aptitudes = ch.aptitudes.map(a => a === "Psyker" ? "Psychic" : a);
+                }
+            }
+            for (const sk of Object.values(skills)) {
+                if (Array.isArray(sk.aptitudes)) {
+                    sk.aptitudes = sk.aptitudes.map(a => a === "Psyker" ? "Psychic" : a);
+                }
+            }
+            update["system.characteristics"] = characteristics;
+            update["system.skills"] = skills;
+            const normalizeSkill = (key, chars) => {
+                if (!skills[key]) return;
+                skills[key].isSpecialist = false;
+                skills[key].characteristics = chars;
+                skills[key].specialities = {};
+                if (typeof skills[key].advance !== "number") skills[key].advance = -20;
+                if (typeof skills[key].cost !== "number") skills[key].cost = 0;
+                if (typeof skills[key].starter !== "boolean") skills[key].starter = false;
+                update[`system.skills.${key}`] = skills[key];
+            };
+            normalizeSkill("navigate", ["Int"]);
+            normalizeSkill("operate", ["Ag"]);
+            normalizeSkill("trade", ["Int"]);
         }
     }
 

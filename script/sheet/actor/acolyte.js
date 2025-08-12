@@ -8,7 +8,7 @@ export class AcolyteSheet extends DarkHeresySheet {
             template: "systems/dark-heresy/template/sheet/actor/acolyte.hbs",
             width: 700,
             height: 881,
-            resizable: false,
+            resizable: true,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",

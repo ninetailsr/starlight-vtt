@@ -83,7 +83,7 @@
             "base": 0,
             "advance": 0,
             "unnatural": 0,
-            "aptitudes": ["Willpower", "Psyker"],
+            "aptitudes": ["Willpower", "Psychic"],
             "cost": 0,
             "damage": 0
           },
@@ -98,12 +98,12 @@
             "damage": 0
           },
           "influence": {
-            "label": "CHARACTERISTIC.INFLUENCE",
-            "short": "Inf",
+            "label": "CHARACTERISTIC.PSIONICS",
+            "short": "Psi",
             "base": 0,
             "advance": 0,
             "unnatural": 0,
-            "aptitudes": [],
+            "aptitudes": ["Psychic", "Willpower"],
             "cost": 0,
             "damage": 0
           }
@@ -605,62 +605,26 @@
           "navigate": {
             "label": "SKILL.NAVIGATE",
             "characteristics": [
-              "Int",
-              "Per"
+              "Int"
             ],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "Fieldcraft"],
-            "specialities": {
-              "surface": {
-                "label": "Surface",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "stellar": {
-                "label": "Stellar",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "warp": {
-                "label": "Warp",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "operate": {
             "label": "SKILL.OPERATE",
             "characteristics": [
-              "Ag",
-              "Int"
+              "Ag"
             ],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Agility", "Fieldcraft"],
-            "specialities": {
-              "surface": {
-                "label": "Surface",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "aeronautica": {
-                "label": "Aeronautica",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "voidship": {
-                "label": "Voidship",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "parry": {
             "label": "SKILL.PARRY",
@@ -677,13 +641,12 @@
           "psyniscience": {
             "label": "SKILL.PSYNISCIENCE",
             "characteristics": [
-              "Per",
-              "WP"
+              "Psi"
             ],
             "advance": -20,
             "isSpecialist": false,
             "specialities": {},
-            "aptitudes": ["Perception", "Psyker"],
+            "aptitudes": ["Perception", "Psychic"],
             "starter": false,
             "cost": 0
           },
@@ -859,129 +822,14 @@
           "trade": {
             "label": "SKILL.TRADE",
             "characteristics": [
-              "Int",
-              "Ag",
-              "Fel"
+              "Int"
             ],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "General"],
-            "specialities": {
-              "agri": {
-                "label": "Agri",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "archaeologist": {
-                "label": "Archaeologist",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "armourer": {
-                "label": "Armourer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "astrographer": {
-                "label": "Astrographer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "chymist": {
-                "label": "Chymist",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "cryptographer": {
-                "label": "Cryptographer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "cook": {
-                "label": "Cook",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "explorator": {
-                "label": "Explorator",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "linguist": {
-                "label": "Linguist",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "loremancer": {
-                "label": "Loremancer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "morticator": {
-                "label": "Morticator",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "performancer": {
-                "label": "Performancer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "prospector": {
-                "label": "Prospector",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "scrimshawer": {
-                "label": "Scrimshawer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "sculptor": {
-                "label": "Sculptor",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "shipwright": {
-                "label": "Shipwright",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "soothsayer": {
-                "label": "Soothsayer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "technomat": {
-                "label": "Technomat",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "voidfarer": {
-                "label": "Voidfarer",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           }
         }
       },

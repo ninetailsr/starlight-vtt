@@ -30,7 +30,7 @@
     "script/dark-heresy.js"
   ],
   "styles": [
-    "css/dark-heresy.css"
+    "css/main.css"
   ],
   "packs": [
     {
