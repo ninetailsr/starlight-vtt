@@ -58,32 +58,12 @@
             <input name="system.experience.value" type="number" value="{{system.experience.value}}" data-dtype="Number" />
         </div>
         <div class="information">
-            <label>{{localize "EXPERIENCE.SPENT_CHARACTERISTICS"}}</label>
-            <input name="system.experience.spentCharacteristics" type="number" value="{{system.experience.spentCharacteristics}}" data-dtype="Number" disabled />
-        </div>
-        <div class="information">
-            <label>{{localize "EXPERIENCE.SPENT_SKILLS"}}</label>
-            <input name="system.experience.spentSkills" type="number" value="{{system.experience.spentSkills}}" data-dtype="Number" disabled />
-        </div>
-        <div class="information">
-            <label>{{localize "EXPERIENCE.SPENT_TALENTS"}}</label>
-            <input name="system.experience.spentTalents" type="number" value="{{system.experience.spentTalents}}" data-dtype="Number" disabled />
-        </div>
-        <div class="information">
-            <label>{{localize "EXPERIENCE.SPENT_PSYCHIC_POWERS"}}</label>
-            <input name="system.experience.spentPsychicPowers" type="number" value="{{system.experience.spentPsychicPowers}}" data-dtype="Number" disabled />
-        </div>
-        <div class="information">
-            <label>{{localize "EXPERIENCE.SPENT_OTHER"}}</label>
-            <input name="system.experience.spentOther" type="number" value="{{system.experience.spentOther}}" data-dtype="Number" />
-        </div>
-        <div class="information">
             <label>{{localize "EXPERIENCE.TOTAL_SPENT"}}</label>
-            <input name="system.experience.totalSpent" type="number" value="{{system.experience.totalSpent}}" data-dtype="Number" disabled />
+            <input name="system.experience.totalSpent" type="number" value="{{system.experience.totalSpent}}" data-dtype="Number" />
         </div>
         <div class="information">
             <label>{{localize "EXPERIENCE.REMAINING"}}</label>
-            <input name="system.experience.remaining" type="number" value="{{system.experience.remaining}}" data-dtype="Number" disabled />
+            <input name="system.experience.remaining" type="number" value="{{system.experience.remaining}}" data-dtype="Number" />
         </div>
     </div>
     <div class="flex column" style="flex-basis: 50%">
@@ -102,7 +82,7 @@
                         <div class="characteristic item flex row">
                             <div class="name">{{localize characteristic.label}}</div>
                             <select class="advance" name="system.characteristics.{{key}}.advance" data-dtype="Number">
-                                {{selectOptions (config "advanceStagesCharacteristics") selected=characteristic.advance localize=true}}
+                                {{selectOptions (config "advanceStagesCharacteristics") selected=(coalesce characteristic.advance -20) localize=true}}
                             </select>
                             <input class="unnatural" name="system.characteristics.{{key}}.unnatural" type="number" value="{{characteristic.unnatural}}" data-dtype="Number" />
                             <input class="base" name="system.characteristics.{{key}}.base" type="number" value="{{characteristic.base}}" data-dtype="Number" />
@@ -118,7 +98,7 @@
                 <div class="class">
                     <label>{{localize "PSYCHIC_POWER.CLASS"}}</label>
                     <select name="system.psy.class">
-                        {{selectOptions (config "psykerClass") selected=system.psy.class localize=true}}
+                        {{selectOptions (config "psykerClass") selected=(coalesce system.psy.class "bound") localize=true}}
                     </select>
                 </div>
                 <div class="rating">
@@ -136,7 +116,7 @@
                 <div class="flex header">
                     <b class="name">{{localize "PSYCHIC_POWER.NAME"}}</b>
                     <b class="cost">{{localize "PSYCHIC_POWER.COST"}}</b>
-                    <a class="button item-create" title="Add Psychic Power" data-type="psychicPower"><i class="fas fa-plus"></i></a>
+                    <a class="button item-create" title="Add Psychic Ability" data-type="psychicPower"><i class="fas fa-plus"></i></a>
                 </div>
                 <div class="items">
                     {{#each items.psychicPowers as |item|}}                        
@@ -169,37 +149,15 @@
             </div>
             <div class="items">
                 {{#each system.skillsFiltered as |skill key|}}
-                    {{#unless skill.isSpecialist}}
-                        <div class="skill item flex row">
-                            <div class="name">{{localize skill.label}}</div>
-                            <select class="advance" name="system.skills.{{key}}.advance" data-dtype="Number">
-                                {{selectOptions (config "advanceStagesSkills") selected=skill.advance localize=true}}
-                            </select>
-                            <input class="total" name="system.skills.{{key}}.total" type="number" value="{{skill.total}}" data-dtype="Number" disabled />
-                            <input class="cost" name="system.skills.{{key}}.cost" type="number" value="{{skill.cost}}" data-dtype="Number" />
-                            <input class="starter" name="system.skills.{{key}}.starter" type="checkbox" {{#if skill.starter}}checked{{/if}} data-dtype="Boolean" />
-                        </div>
-                    {{/unless}}
-                {{/each}}
-                {{#each system.skillsFiltered as |skill key|}}
-                    {{#if (and skill.isSpecialist (ne key "lore"))}}
-                        <div class="flex header">
-                            <b class="name">{{localize skill.label}}</b>
-                        </div>
-                        {{#each skill.specialities as |speciality keySpe|}}
-                            {{#if speciality.label}}
-                                <div class="speciality item flex row">
-                                    <div class="name">{{localize speciality.label}}</div>
-                                    <select class="advance" name="system.skills.{{key}}.specialities.{{keySpe}}.advance" data-dtype="Number">
-                                        {{selectOptions (config "advanceStagesSkills") selected=speciality.advance localize=true}}
-                                    </select>
-                                    <input class="total" name="system.skills.{{key}}.specialities.{{keySpe}}.total" type="number" value="{{speciality.total}}" data-dtype="Number" disabled />
-                                    <input class="cost" name="system.skills.{{key}}.specialities.{{keySpe}}.cost" type="number" value="{{speciality.cost}}" data-dtype="Number" />
-                                    <input class="starter" name="system.skills.{{key}}.specialities.{{keySpe}}.starter" type="checkbox" {{#if speciality.starter}}checked{{/if}} data-dtype="Boolean" />
-                                </div>
-                            {{/if}}
-                        {{/each}}
-                    {{/if}}
+                    <div class="skill item flex row">
+                        <div class="name">{{localize skill.label}}</div>
+                        <select class="advance" name="system.skills.{{key}}.advance" data-dtype="Number">
+                            {{selectOptions (config "advanceStagesSkills") selected=(coalesce skill.advance -20) localize=true}}
+                        </select>
+                        <input class="total" name="system.skills.{{key}}.total" type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+                        <input class="cost" name="system.skills.{{key}}.cost" type="number" value="{{skill.cost}}" data-dtype="Number" />
+                        <input class="starter" name="system.skills.{{key}}.starter" type="checkbox" {{#if skill.starter}}checked{{/if}} data-dtype="Boolean" />
+                    </div>
                 {{/each}}
             </div>
         </div>

@@ -112,13 +112,7 @@ export default class DarkHeresyUtil {
         });
     }
 
-    static createSpecialtyRollData(actor, skillName, specialityName) {
-        const skill = actor.skills[skillName];
-        const speciality = skill.specialities[specialityName];
-        return foundry.utils.mergeObject(this.createCommonNormalRollData(actor, speciality), {
-            name: speciality.label
-        });
-    }
+    // Specialist logic removed
 
     static createCharacteristicRollData(actor, characteristicName) {
         const characteristic = actor.characteristics[characteristicName];
@@ -134,25 +128,9 @@ export default class DarkHeresyUtil {
         });
     }
 
-    static createMalignancyTestRolldata(actor) {
-        const characteristic = actor.characteristics.willpower;
-        return foundry.utils.mergeObject(this.createCommonNormalRollData(actor, characteristic), {
-            name: "CORRUPTION.MALIGNANCY",
-            target: {
-                modifier: this.getMalignancyModifier(actor.corruption)
-            }
-        });
-    }
 
-    static createTraumaTestRolldata(actor) {
-        const characteristic = actor.characteristics.willpower;
-        return foundry.utils.mergeObject(this.createCommonNormalRollData(actor, characteristic), {
-            name: "TRAUMA.HEADER",
-            target: {
-                modifier: this.getTraumaModifier(actor.insanity)
-            }
-        });
-    }
+
+
 
 
     static extractWeaponTraits(traits) {
@@ -238,29 +216,7 @@ export default class DarkHeresyUtil {
         return characteristics;
     }
 
-    static getMalignancyModifier(corruption) {
-        if (corruption <= 30) {
-            return 0;
-        } else if (corruption <= 60) {
-            return -10;
-        } else if (corruption <= 90) {
-            return -20;
-        } else {
-            return -30;
-        }
-    }
 
-    static getTraumaModifier(insanity) {
-        if (insanity < 10) {
-            return 0;
-        } else if (insanity < 40) {
-            return 10;
-        } else if (insanity < 60) {
-            return 0;
-        } else if (insanity < 80) {
-            return -10;
-        } else {
-            return -20;
-        }
-    }
+
+
 }

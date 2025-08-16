@@ -194,141 +194,13 @@
           },
           "commonLore": {
             "label": "SKILL.COMMON_LORE",
-            "characteristics": [
-              "Int",
-              "Fel"
-            ],
+            "characteristics": ["Int", "Fel"],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "Knowledge"],
-            "specialities": {
-              "adeptaSororitas": {
-                "label": "Adepta Sororitas",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "adeptusArbites": {
-                "label": "Adeptus Arbites",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "adeptusAstartes": {
-                "label": "Adeptus Astartes",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "adeptusAstraTelepathica": {
-                "label": "Adeptus Astra Telepathica",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "adeptusMechanicus": {
-                "label": "Adeptus Mechanicus",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "administratum": {
-                "label": "Administratum",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "askellonSector": {
-                "label": "Askellon Sector",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "chartistCaptains": {
-                "label": "Chartist Captains",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "collegiaTitanicu": {
-                "label": "Collegia Titanicu",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "ecclesiarchy": {
-                "label": "Ecclesiarchy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperialCreed": {
-                "label": "Imperial Creed",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperialGuard": {
-                "label": "Imperial Guard",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperialNavy": {
-                "label": "Imperial Navy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperium": {
-                "label": "Imperium",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "navigators": {
-                "label": "Navigators",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "planetaryDefenceForces": {
-                "label": "Planetary Defence Forces",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "rogueTraders": {
-                "label": "Rogue Traders",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "scholaProgenium": {
-                "label": "Schola Progenium",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "tech": {
-                "label": "Tech",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "underworld": {
-                "label": "Underworld",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "war": {
-                "label": "War",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "deceive": {
             "label": "SKILL.DECEIVE",
@@ -357,93 +229,13 @@
           },
           "forbiddenLore": {
             "label": "SKILL.FORBIDDEN_LORE",
-            "characteristics": [
-              "Int",
-              "Fel"
-            ],
+            "characteristics": ["Int", "Fel"],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "Knowledge"],
-            "specialities": {
-              "archaeotech": {
-                "label": "Archaeotech",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "chaosSpaceMarines": {
-                "label": "Chaos Space Marines",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "criminalCartelsAndSmugglers": {
-                "label": "Criminal Cartels and Smugglers",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "daemonology": {
-                "label": "Daemonology",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "heresy": {
-                "label": "Heresy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "theHorusHeresyAndTheLongWar": {
-                "label": "The Horus Heresy and the Long War",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "inquisition": {
-                "label": "Inquisition",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "mutants": {
-                "label": "Mutants",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "officioAssassinorum": {
-                "label": "Officio Assassinorum",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "pirates": {
-                "label": "Pirates",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "psykers": {
-                "label": "Psykers",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "theWarp": {
-                "label": "The Warp",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "xenos": {
-                "label": "Xenos",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "inquiry": {
             "label": "SKILL.INQUIRY",
@@ -487,93 +279,13 @@
           },
           "linguistics": {
             "label": "SKILL.LINGUISTICS",
-            "characteristics": [
-              "Int",
-              "Fel"
-            ],
+            "characteristics": ["Int", "Fel"],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "General"],
-            "specialities": {
-              "chapterRunes": {
-                "label": "Chapter Runes",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "chaosMarks": {
-                "label": "Chaos Marks",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "eldar": {
-                "label": "Eldar",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "highGothic": {
-                "label": "High Gothic",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperialCodes": {
-                "label": "Imperial Codes",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "lowGothic": {
-                "label": "Low Gothic",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "mercenary": {
-                "label": "Mercenary",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "necrontyr": {
-                "label": "Necrontyr",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "ork": {
-                "label": "Ork",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "technaLingua": {
-                "label": "Techna-Lingua",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "tau": {
-                "label": "Tau",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "underworld": {
-                "label": "Underworld",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "xenosMarkings": {
-                "label": "Xenos Markings",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "logic": {
             "label": "SKILL.LOGIC",
@@ -652,93 +364,13 @@
           },
           "scholasticLore": {
             "label": "SKILL.SCHOLASTIC_LORE",
-            "characteristics": [
-              "Int",
-              "Fel"
-            ],
+            "characteristics": ["Int", "Fel"],
             "advance": -20,
-            "isSpecialist": true,
+            "isSpecialist": false,
+            "specialities": {},
             "aptitudes": ["Intelligence", "Knowledge"],
-            "specialities": {
-              "astromancy": {
-                "label": "Astromancy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "beasts": {
-                "label": "Beasts",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "bureaucracy": {
-                "label": "Bureaucracy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "chymistry": {
-                "label": "Chymistry",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "cryptology": {
-                "label": "Cryptology",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "heraldry": {
-                "label": "Heraldry",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "imperialWarrants": {
-                "label": "Imperial Warrants",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "judgement": {
-                "label": "Judgement",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "legend": {
-                "label": "Legend",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "numerology": {
-                "label": "Numerology",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "occult": {
-                "label": "Occult",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "philosophy": {
-                "label": "Philosophy",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              },
-              "tacticaImperialis": {
-                "label": "Tactica Imperialis",
-                "advance": -20,
-                "starter": false,
-                "cost": 0
-              }
-            }
+            "starter": false,
+            "cost": 0
           },
           "scrutiny": {
             "label": "SKILL.SCRUTINY",
@@ -865,6 +497,38 @@
           "class": "bound",
           "cost": 0
         }
+      },
+      "armour": {
+        "head": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "leftArm": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "rightArm": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "body": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "leftLeg": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "rightLeg": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        }
       }
     },
     "acolyte": {
@@ -875,7 +539,8 @@
         "wounds",
         "fatigue",
         "fate",
-        "psy"
+        "psy",
+        "armor"
       ],
       "bio": {
         "homeWorld": "",
@@ -896,8 +561,7 @@
       "experience": {
         "value": 0
       },
-      "insanity": 0,
-      "corruption": 0,
+
       "aptitudes": {},
       "size": 4
     },
@@ -909,10 +573,43 @@
         "wounds",
         "fatigue",
         "fate",
-        "psy"
+        "psy",
+        "armor"
       ],
       "experience": {
         "value": 0
+      },
+      "armour": {
+        "head": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "leftArm": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "rightArm": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "body": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "leftLeg": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        },
+        "rightLeg": {
+          "total": 0,
+          "toughnessBonus": 0,
+          "value": 0
+        }
       },
       "faction": "",
       "subfaction": "",
@@ -926,16 +623,16 @@
     "types": [
       "ammunition",
       "aptitude",
-      "armour",
+      "armor",
       "criticalInjury",
       "cybernetic",
       "drug",
       "forceField",
       "gear",
-      "malignancy",
-      "mentalDisorder",
-      "mutation",
-      "psychicPower",
+      
+      
+      
+              "psychicAbility",
       "specialAbility",
       "talent",
       "tool",
@@ -974,6 +671,7 @@
     "armour": {
       "templates": [ "equipment" ],
       "type": "basic",
+      "equipped": true,
       "isAdditive": false,
       "part": {
         "head": 0,
@@ -1007,15 +705,9 @@
       "templates": [ "equipment" ],
       "shortDescription": ""
     },
-    "malignancy": {
-      "templates": ["itemDescription"]
-    },
-    "mentalDisorder": {
-      "templates": ["itemDescription"]
-    },
-    "mutation": {
-      "templates": ["itemDescription"]
-    },
+
+
+
     "psychicPower": {
       "templates": ["itemDescription"],
       "shortDescription": "",

@@ -10,16 +10,25 @@ export class DarkHeresySheet extends ActorSheet {
         html.find("input").focusin(ev => this._onFocusIn(ev));
         html.find(".roll-characteristic").click(async ev => await this._prepareRollCharacteristic(ev));
         html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
-        html.find(".roll-speciality").click(async ev => await this._prepareRollSpeciality(ev));
+        // Specialist removed
         // Removed Insanity and Corruption roll handlers
         html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
         html.find(".roll-psychic-power").click(async ev => await this._prepareRollPsychicPower(ev));
     }
 
+    _onFocusIn(ev) {
+        const target = ev?.currentTarget;
+        if (target && typeof target.select === "function") {
+            // Select the entire field contents on focus for quicker editing
+            target.select();
+        }
+    }
+
     /** @override */
     async getData() {
         const data = super.getData();
-        data.system = data.data.system;
+        // Ensure system data is always present as a plain object for templates
+        data.system = foundry.utils.duplicate(this.actor.system);
         // Build filtered skills view and alias Common Lore -> Lore
         try {
             const skills = data.system.skills || {};
@@ -34,22 +43,20 @@ export class DarkHeresySheet extends ActorSheet {
             }
             // Remove Lore entirely (both legacy commonLore and any lore alias)
             // Ensure Navigate, Operate, and Trade are treated as normal (non-specialist) skills in the UI
-            const normalizeToNonSpecialist = (key, defaultChars) => {
-                if (!skills[key]) return;
-                const s = foundry.utils.duplicate(skills[key]);
+            // Normalize ALL skills to non-specialist for simpler UX and maintenance
+            for (const [k, v] of Object.entries(filteredSkills)) {
+                const s = foundry.utils.duplicate(v);
                 s.isSpecialist = false;
                 s.specialities = {};
                 if (!Array.isArray(s.characteristics) || s.characteristics.length === 0) {
-                    s.characteristics = defaultChars;
+                    // Default characteristic if missing
+                    s.characteristics = ["Int"]; // neutral default
                 }
                 if (typeof s.advance !== "number") s.advance = -20;
                 if (typeof s.cost !== "number") s.cost = 0;
                 if (typeof s.starter !== "boolean") s.starter = false;
-                filteredSkills[key] = s;
-            };
-            normalizeToNonSpecialist("navigate", ["Int"]);
-            normalizeToNonSpecialist("operate", ["Ag"]);
-            normalizeToNonSpecialist("trade", ["Int"]);
+                filteredSkills[k] = s;
+            }
             data.system.skillsFiltered = filteredSkills;
         } catch (e) {
             console.warn("Failed to build filtered skills:", e);
@@ -145,14 +152,7 @@ export class DarkHeresySheet extends ActorSheet {
         );
     }
 
-    async _prepareRollSpeciality(event) {
-        event.preventDefault();
-        const skillName = $(event.currentTarget).parents(".item").data("skill");
-        const specialityName = $(event.currentTarget).data("speciality");
-        await prepareCommonRoll(
-            DarkHeresyUtil.createSpecialtyRollData(this.actor, skillName, specialityName)
-        );
-    }
+    // Specialist removed
 
     // Removed Insanity and Corruption roll methods
 
@@ -178,7 +178,7 @@ export class DarkHeresySheet extends ActorSheet {
     constructItemLists() {
         let items = {};
         let itemTypes = this.actor.itemTypes;
-        // Removed mentalDisorder, malignancy, and mutation from item lists
+
         if (this.actor.type === "npc") {
             items.abilities = itemTypes.talent
                 .concat(itemTypes.trait)

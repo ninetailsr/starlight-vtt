@@ -1,5 +1,41 @@
 export class DarkHeresyActor extends Actor {
 
+    /** Ensure base scaffolding exists so templates always see objects */
+    prepareBaseData() {
+        super.prepareBaseData?.();
+        this.system.armour ||= {
+            head: { total: 0, toughnessBonus: 0, value: 0 },
+            leftArm: { total: 0, toughnessBonus: 0, value: 0 },
+            rightArm: { total: 0, toughnessBonus: 0, value: 0 },
+            body: { total: 0, toughnessBonus: 0, value: 0 },
+            leftLeg: { total: 0, toughnessBonus: 0, value: 0 },
+            rightLeg: { total: 0, toughnessBonus: 0, value: 0 }
+        };
+        // Prime toughness bonus early so UI shows TB even before full compute
+        const t = this.system?.characteristics?.toughness || {};
+        const tb = Math.floor((((t.base ?? 0) + (t.advance ?? 0)) / 10)) + (t.unnatural ?? 0);
+        const locs = ["head", "leftArm", "rightArm", "body", "leftLeg", "rightLeg"];
+        for (const loc of locs) {
+            const part = this.system.armour[loc] || (this.system.armour[loc] = { total: 0, toughnessBonus: 0, value: 0 });
+            part.toughnessBonus = tb;
+            part.total = part.toughnessBonus + (Number(part.value) || 0);
+        }
+    }
+
+    /**
+     * Foundry VTT v10+ derived data hook
+     */
+    prepareDerivedData() {
+        super.prepareDerivedData?.();
+        // Ensure all computed fields are populated for templates
+        this._computeCharacteristics();
+        this._computeSkills();
+        this._computeItems();
+        this._computeExperience();
+        this._computeArmour();
+        this._computeMovement();
+    }
+
     async _preCreate(data, options, user) {
 
         let initData = {
@@ -18,13 +54,9 @@ export class DarkHeresyActor extends Actor {
     }
 
     prepareData() {
+        // Keep for backward compatibility with worlds still on older core
         super.prepareData();
-        this._computeCharacteristics();
-        this._computeSkills();
-        this._computeItems();
-        this._computeExperience();
-        this._computeArmour();
-        this._computeMovement();
+        this.prepareDerivedData?.();
     }
 
     _computeCharacteristics() {
@@ -42,8 +74,7 @@ export class DarkHeresyActor extends Actor {
             characteristic.advanceCharacteristic = this._getAdvanceCharacteristic(characteristic.advance);
             i++;
         }
-        this.system.insanityBonus = Math.floor(this.insanity / 10);
-        this.system.corruptionBonus = Math.floor(this.corruption / 10);
+
         this.psy.currentRating = this.psy.rating - this.psy.sustained;
         this.initiative.bonus = this.characteristics[this.initiative.characteristic].bonus;
         // Done as variables to make it easier to read & understand
@@ -61,18 +92,15 @@ export class DarkHeresyActor extends Actor {
     }
 
     _computeSkills() {
-        for (let skill of Object.values(this.skills)) {
-            let short = skill.characteristics[0];
-            let characteristic = this._findCharacteristic(short);
-            skill.total = characteristic.total + skill.advance;
+        const skills = this.skills || {};
+        for (let skill of Object.values(skills)) {
+            const short = Array.isArray(skill.characteristics) && skill.characteristics.length > 0
+                ? skill.characteristics[0]
+                : (skill.characteristics || "");
+            const characteristic = this._findCharacteristic(short);
+            skill.total = (characteristic.total || 0) + (skill.advance || 0);
             skill.advanceSkill = this._getAdvanceSkill(skill.advance);
-            if (skill.isSpecialist) {
-                for (let speciality of Object.values(skill.specialities)) {
-                    speciality.total = characteristic.total + speciality.advance;
-                    speciality.isKnown = speciality.advance >= 0;
-                    speciality.advanceSpec = this._getAdvanceSkill(speciality.advance);
-                }
-            }
+            // Specialist paths removed
         }
     }
 
@@ -110,23 +138,12 @@ export class DarkHeresyActor extends Actor {
         }
         for (let skill of Object.values(this.skills)) {
             let matchedAptitudes = characterAptitudes.filter(it => skill.aptitudes.includes(it)).length;
-            if (skill.isSpecialist) {
-                for (let speciality of Object.values(skill.specialities)) {
-                    let cost = 0;
-                    for (let i = (speciality.starter ? 1 : 0); i <= speciality.advance / 10; i++) {
-                        cost += (i + 1) * (3 - matchedAptitudes) * 100;
-                    }
-                    speciality.cost = cost;
-                    this.experience.spentSkills += cost;
-                }
-            } else {
-                let cost = 0;
-                for (let i = (skill.starter ? 1 : 0); i <= skill.advance / 10; i++) {
-                    cost += (i + 1) * (3 - matchedAptitudes) * 100;
-                }
-                skill.cost = cost;
-                this.experience.spentSkills += cost;
+            let cost = 0;
+            for (let i = (skill.starter ? 1 : 0); i <= (skill.advance || -20) / 10; i++) {
+                cost += (i + 1) * (3 - matchedAptitudes) * 100;
             }
+            skill.cost = cost;
+            this.experience.spentSkills += cost;
         }
         for (let item of this.items.filter(it => it.isTalent || it.isPsychicPower)) {
             if (item.isTalent) {
@@ -161,13 +178,7 @@ export class DarkHeresyActor extends Actor {
             this.experience.spentCharacteristics += parseInt(characteristic.cost, 10);
         }
         for (let skill of Object.values(this.skills)) {
-            if (skill.isSpecialist) {
-                for (let speciality of Object.values(skill.specialities)) {
-                    this.experience.spentSkills += parseInt(speciality.cost, 10);
-                }
-            } else {
-                this.experience.spentSkills += parseInt(skill.cost, 10);
-            }
+            this.experience.spentSkills += parseInt(skill.cost, 10);
         }
         for (let item of this.items) {
             if (item.isTalent) {
@@ -190,60 +201,64 @@ export class DarkHeresyActor extends Actor {
     }
 
     _computeArmour() {
-        let locations = Object.keys(game.darkHeresy.config.hitLocations);
-        let toughness = this.characteristics.toughness;
+        try {
+            const defaultLocations = ["head", "leftArm", "rightArm", "body", "leftLeg", "rightLeg"];
+            const locations = Object.keys(game.darkHeresy?.config?.hitLocations || {})?.length
+                ? Object.keys(game.darkHeresy.config.hitLocations)
+                : defaultLocations;
 
-        this.system.armour = locations
-            .reduce((accumulator, location) =>
-                Object.assign(accumulator,
-                    {
-                        [location]: {
-                            total: toughness.bonus,
-                            toughnessBonus: toughness.bonus,
-                            value: 0
-                        }
-                    }), {});
+            const toughness = this.characteristics?.toughness || { bonus: 0 };
 
-        // Object for storing the max armour
-        let maxArmour = locations
-            .reduce((acc, location) =>
-                Object.assign(acc, { [location]: 0 }), {});
+            // Seed system.armour with TB values so template always has something to render
+            this.system.armour = locations.reduce((accumulator, location) => {
+                accumulator[location] = {
+                    total: toughness.bonus,
+                    toughnessBonus: toughness.bonus,
+                    value: 0
+                };
+                return accumulator;
+            }, {});
 
-        // For each item, find the maximum armour val per location
-        this.items
-            .filter(item => item.isArmour && !item.isAdditive)
-            .reduce((acc, armour) => {
-                locations.forEach(location => {
-                    let armourVal = armour.part[location] || 0;
-                    if (armourVal > acc[location]) {
-                        acc[location] = armourVal;
-                    }
+            // Track max armour per location
+            const maxArmour = locations.reduce((acc, location) => { acc[location] = 0; return acc; }, {});
+
+            // Highest non-additive per location
+            this.items
+                .filter(item => item.isArmour && item.isEquipped && !item.isAdditive)
+                .forEach(armour => {
+                    locations.forEach(location => {
+                        const armourVal = Number(armour.part?.[location] || 0);
+                        if (armourVal > maxArmour[location]) maxArmour[location] = armourVal;
+                    });
                 });
-                return acc;
-            }, maxArmour);
 
-        this.items
-            .filter(item => item.isArmour && item.isAdditive)
-            .forEach(armour => {
-                locations.forEach(location => {
-                    let armourVal = armour.part[location] || 0;
-                    maxArmour[location] += armourVal;
+            // Additive stacks
+            this.items
+                .filter(item => item.isArmour && item.isEquipped && item.isAdditive)
+                .forEach(armour => {
+                    locations.forEach(location => {
+                        const armourVal = Number(armour.part?.[location] || 0);
+                        maxArmour[location] += armourVal;
+                    });
                 });
+
+            // Commit values and totals
+            locations.forEach(location => {
+                this.system.armour[location].value = maxArmour[location];
+                this.system.armour[location].total = this.system.armour[location].toughnessBonus + this.system.armour[location].value;
             });
-
-        this.armour.head.value = maxArmour.head;
-        this.armour.leftArm.value = maxArmour.leftArm;
-        this.armour.rightArm.value = maxArmour.rightArm;
-        this.armour.body.value = maxArmour.body;
-        this.armour.leftLeg.value = maxArmour.leftLeg;
-        this.armour.rightLeg.value = maxArmour.rightLeg;
-
-        this.armour.head.total += this.armour.head.value;
-        this.armour.leftArm.total += this.armour.leftArm.value;
-        this.armour.rightArm.total += this.armour.rightArm.value;
-        this.armour.body.total += this.armour.body.value;
-        this.armour.leftLeg.total += this.armour.leftLeg.value;
-        this.armour.rightLeg.total += this.armour.rightLeg.value;
+        } catch (e) {
+            // Fail-safe: ensure structure exists with zeros so template never breaks
+            this.system.armour = {
+                head: { total: 0, toughnessBonus: 0, value: 0 },
+                leftArm: { total: 0, toughnessBonus: 0, value: 0 },
+                rightArm: { total: 0, toughnessBonus: 0, value: 0 },
+                body: { total: 0, toughnessBonus: 0, value: 0 },
+                leftLeg: { total: 0, toughnessBonus: 0, value: 0 },
+                rightLeg: { total: 0, toughnessBonus: 0, value: 0 }
+            };
+            console.warn("_computeArmour() failed:", e);
+        }
     }
 
     _computeMovement() {
@@ -541,7 +556,7 @@ export class DarkHeresyActor extends Actor {
 
     get fatigue() { return this.system.fatigue; }
 
-    get fate() { return this.system.fate; }
+    get fate() { return this.system.fate; } // Note: "fate" field contains stress data
 
     get psy() { return this.system.psy; }
 
@@ -549,9 +564,7 @@ export class DarkHeresyActor extends Actor {
 
     get experience() { return this.system.experience; }
 
-    get insanity() { return this.system.insanity; }
 
-    get corruption() { return this.system.corruption; }
 
     get aptitudes() { return this.system.aptitudes; }
 

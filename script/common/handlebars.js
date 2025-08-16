@@ -24,10 +24,10 @@ function preloadHandlebarsTemplates() {
         "systems/dark-heresy/template/sheet/actor/tab/psychic-powers.hbs",
         "systems/dark-heresy/template/sheet/actor/tab/stats.hbs",
 
-        "systems/dark-heresy/template/sheet/mental-disorder.hbs",
+
         "systems/dark-heresy/template/sheet/aptitude.hbs",
-        "systems/dark-heresy/template/sheet/malignancy.hbs",
-        "systems/dark-heresy/template/sheet/mutation.hbs",
+
+
         "systems/dark-heresy/template/sheet/talent.hbs",
         "systems/dark-heresy/template/sheet/trait.hbs",
         "systems/dark-heresy/template/sheet/special-ability.hbs",
@@ -109,7 +109,20 @@ function registerHandlebarsHelpers() {
     });
 
     Handlebars.registerHelper("config", function(key) {
-        return game.darkHeresy.config[key];
+        return game.darkHeresy.config[key] || {};
+    });
+
+    // Safe object helper to prevent null/undefined errors
+    Handlebars.registerHelper("safeObj", function(obj) {
+        return obj && typeof obj === 'object' ? obj : {};
+    });
+
+    // Coalesce helper to return first non-null/undefined value
+    Handlebars.registerHelper("coalesce", function(...args) {
+        for (let i = 0; i < args.length - 1; i++) {
+            if (args[i] != null) return args[i];
+        }
+        return args[args.length - 1];
     });
 
 }

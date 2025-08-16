@@ -1,6 +1,6 @@
 import { DarkHeresyActor } from "./common/actor.js";
 import { DarkHeresyItem } from "./common/item.js";
-import { AcolyteSheet } from "./sheet/actor/acolyte.js";
+import { PCSheet } from "./sheet/actor/acolyte.js";
 import { NpcSheet } from "./sheet/actor/npc.js";
 import { WeaponSheet } from "./sheet/weapon.js";
 import { AmmunitionSheet } from "./sheet/ammunition.js";
@@ -12,9 +12,9 @@ import { DrugSheet } from "./sheet/drug.js";
 import { GearSheet } from "./sheet/gear.js";
 import { ToolSheet } from "./sheet/tool.js";
 import { CriticalInjurySheet } from "./sheet/critical-injury.js";
-import { MalignancySheet } from "./sheet/malignancy.js";
-import { MentalDisorderSheet } from "./sheet/mental-disorder.js";
-import { MutationSheet } from "./sheet/mutation.js";
+
+
+
 import { PsychicPowerSheet } from "./sheet/psychic-power.js";
 import { TalentSheet } from "./sheet/talent.js";
 import { SpecialAbilitySheet } from "./sheet/special-ability.js";
@@ -35,7 +35,7 @@ Hooks.once("init", function() {
     CONFIG.Combat.initiative = { formula: "@initiative.base + @initiative.bonus", decimals: 0 };
     CONFIG.Actor.documentClass = DarkHeresyActor;
     CONFIG.Item.documentClass = DarkHeresyItem;
-    CONFIG.fontDefinitions["Caslon Antique"] = {editor: true, fonts: []};
+    // Use default Foundry fonts; remove custom Caslon Antique registration
     game.darkHeresy = {
         config: Dh,
         testInit: {
@@ -50,7 +50,7 @@ Hooks.once("init", function() {
     };
     game.macro = DhMacroUtil;
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("dark-heresy", AcolyteSheet, { types: ["acolyte"], makeDefault: true });
+    Actors.registerSheet("dark-heresy", PCSheet, { types: ["acolyte"], makeDefault: true });
     Actors.registerSheet("dark-heresy", NpcSheet, { types: ["npc"], makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("dark-heresy", WeaponSheet, { types: ["weapon"], makeDefault: true });
@@ -63,9 +63,9 @@ Hooks.once("init", function() {
     Items.registerSheet("dark-heresy", GearSheet, { types: ["gear"], makeDefault: true });
     Items.registerSheet("dark-heresy", ToolSheet, { types: ["tool"], makeDefault: true });
     Items.registerSheet("dark-heresy", CriticalInjurySheet, { types: ["criticalInjury"], makeDefault: true });
-    Items.registerSheet("dark-heresy", MalignancySheet, { types: ["malignancy"], makeDefault: true });
-    Items.registerSheet("dark-heresy", MentalDisorderSheet, { types: ["mentalDisorder"], makeDefault: true });
-    Items.registerSheet("dark-heresy", MutationSheet, { types: ["mutation"], makeDefault: true });
+
+
+
     Items.registerSheet("dark-heresy", PsychicPowerSheet, { types: ["psychicPower"], makeDefault: true });
     Items.registerSheet("dark-heresy", TalentSheet, { types: ["talent"], makeDefault: true });
     Items.registerSheet("dark-heresy", SpecialAbilitySheet, { types: ["specialAbility"], makeDefault: true });
@@ -114,7 +114,7 @@ Hooks.once("ready", function() {
 /* -------------------------------------------- */
 
 /** Add Event Listeners for Buttons on chat boxes */
-Hooks.once("renderChatLog", (chat, html) => {
+Hooks.on("renderChatLog", (_app, html) => {
     chatListeners(html);
 });
 

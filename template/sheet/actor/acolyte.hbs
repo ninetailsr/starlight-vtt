@@ -10,30 +10,12 @@
                         <label>{{localize "BIO.NAME"}}</label>
                         <input name="name" type="text" value="{{actor.name}}" />
                     </div>
-                    <div class="header-row">
-                        <div class="home-world">
-                            <label>{{localize "BIO.HOME_WORLD"}}</label>
-                            <input name="system.bio.homeWorld" type="text" value="{{system.bio.homeWorld}}" />
-                        </div>
-                        <div class="role">
-                            <label>{{localize "BIO.ROLE"}}</label>
-                            <input style="margin-left: 8px" name="system.bio.role" type="text" value="{{system.bio.role}}" />
-                        </div>
-                        <div class="fate">
-                            <label>{{localize "FATE"}}</label>
-                            <input style="margin-left: 20px" name="system.fate.value" type="number" value="{{system.fate.value}}" data-dtype="Number" />
+                    <div class="header-row stress-fatigue-row">
+                        <div class="stress">
+                            <label>{{localize "STRESS"}}</label>
+                            <input name="system.fate.value" type="number" value="{{system.fate.value}}" data-dtype="Number" />
                             /
                             <input name="system.fate.max" type="number" value="{{system.fate.max}}" data-dtype="Number" />
-                        </div>
-                    </div>
-                    <div class="header-row">
-                        <div class="background">
-                            <label>{{localize "BIO.BACKGROUND"}}</label>
-                            <input style="margin-left: 18px" name="system.bio.background" type="text" value="{{system.bio.background}}" />
-                        </div>
-                        <div class="elite">
-                            <label>{{localize "BIO.ELITE"}}</label>
-                            <input name="system.bio.elite" type="text" value="{{system.bio.elite}}" />
                         </div>
                         <div class="fatigue">
                             <label>{{localize "FATIGUE"}}</label>
@@ -42,6 +24,7 @@
                             <input name="system.fatigue.max" type="number" value="{{system.fatigue.max}}" data-dtype="Number" />
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

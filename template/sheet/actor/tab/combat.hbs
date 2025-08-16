@@ -37,6 +37,7 @@
     </div>
     <div class="armour border">
         <h1>{{localize "TITLE.ARMOUR"}}</h1>
+        
         <div class="armour-row">
             <div class="part" style="margin-right: 25px">
                 <div class="name">{{localize "ARMOUR.HEAD"}}</div>
@@ -114,7 +115,7 @@
             <input name="system.initiative.base" type="text" value="{{system.initiative.base}}" />
             +
             <select name="system.initiative.characteristic">
-                {{selectOptions system.characteristics selected=system.initiative.characteristic labelAttr="label" localize=true}}
+                {{selectOptions (safeObj system.characteristics) selected=system.initiative.characteristic labelAttr="label" localize=true}}
             </select>
         </div>
         <div class="information">

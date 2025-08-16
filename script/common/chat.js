@@ -8,10 +8,11 @@ import DarkHeresyUtil from "./util.js";
  * @param {HTMLElement} html
  */
 export function chatListeners(html) {
-    html.on("click", ".invoke-test", onTestClick.bind(this));
-    html.on("click", ".invoke-damage", onDamageClick.bind(this));
-    html.on("click", ".reload-Weapon", onReloadClick.bind(this));
-    html.on("dblclick", ".dark-heresy.chat.roll>.background.border", onChatRollClick.bind(this));
+    const $html = html instanceof jQuery ? html : $(html);
+    $html.on("click", ".invoke-test", onTestClick.bind(this));
+    $html.on("click", ".invoke-damage", onDamageClick.bind(this));
+    $html.on("click", ".reload-Weapon", onReloadClick.bind(this));
+    $html.on("dblclick", ".dark-heresy.chat.roll>.background.border", onChatRollClick.bind(this));
 }
 
 /**
@@ -98,7 +99,7 @@ function applyChatCardDamage(roll, multiplier) {
 }
 
 /**
- * Rerolls the Test using the same Data as the initial Roll while reducing an actors fate
+ * Rerolls the Test using the same Data as the initial Roll while reducing an actors stress
  * @param {object} rollData
  * @returns {Promise}
  */

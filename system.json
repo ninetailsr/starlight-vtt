@@ -1,15 +1,13 @@
 {
   "id": "dark-heresy",
   "title": "Dark Heresy 2E",
-  "description": "Unofficial Foundry VTT System for Dark Heresy 2nd Edition.",
-  "version": "4.3.2.1",
-  "minimumCoreVersion" : 11,
+  "description": "Unofficial Foundry VTT System for the Starlight System.",
+  "version": "1.0.0",
   "compatibility" : {
-    "minimum" : 11,
-    "verified" : 12,
+    "minimum" : 13,
+    "verified" : 13,
     "maximum" : 13
   },
-  "templateVersion": 2,
   "authors": [
 	{ "name":"JeansenVaars" }, 
     { "name":"Moo Man",
@@ -23,7 +21,8 @@
     { "name":"Silver292" },
     { "name":"Giddy" },
     { "name":"Dazzerix" },
-	{ "name":"FilippoPolo" }
+	{ "name":"FilippoPolo" },
+    { "name":"Goo" }
   ],
   "scripts": [],
   "esmodules": [
@@ -46,28 +45,15 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
-    },
-    {
-      "lang": "fr",
-      "name": "Français",
-      "path": "lang/fr.json"
-    },
-	  {
-      "lang": "pl",
-      "name": "Polski",
-      "path": "lang/pl.json"
     }
   ],
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
-  "url": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT",
+  "url": "https://github.com/ninetailsr/starlight-vtt",
   "socket": true,
   "manifest": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/system.json",
   "download": "https://github.com/Vendare/DarkHeresy2E-FoundryVTT/releases/download/4.3.2.1/dark-heresy.zip",

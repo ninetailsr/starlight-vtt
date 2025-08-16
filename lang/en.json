@@ -1,6 +1,6 @@
 {
 
-  "TYPES.Actor.acolyte" : "Acolyte",
+  "TYPES.Actor.acolyte" : "PC",
   "TYPES.Actor.npc" : "NPC",
 
   "ADVANCE.NONE": "None",
@@ -40,7 +40,7 @@
   "ARMOUR.LEFT_LEG": "Left Leg",
   "ARMOUR.RIGHT_LEG": "Right Leg",
 
-  "ARMOUR.HEADER": "Armour",
+      "ARMOUR.HEADER": "Armor",
   "ARMOUR.NAME": "Name",
   "ARMOUR.PART": "Part",
   "ARMOUR.WEIGHT": "Weight",
@@ -48,7 +48,7 @@
   "ARMOUR.TYPE": "Type",
   "ARMOUR.CRAFTSMANSHIP": "Craftsmanship",
   "ARMOUR.AVAILABILITY": "Availability",
-  "ARMOUR.IS_ADDITIVE": "Additive to other Armour",
+      "ARMOUR.IS_ADDITIVE": "Additive to other Armor",
 
   "ARMOUR_TYPE.BASIC": "Basic",
   "ARMOUR_TYPE.FLAK": "Flak",
@@ -79,7 +79,7 @@
   "AVAILABILITY.UNIQUE": "Unique",
 
   "BIO.NAME": "Name",
-  "BIO.HOME_WORLD": "Home World",
+  "BIO.HOME_WORLD": "Home",
   "BIO.BACKGROUND": "Background",
   "BIO.ROLE": "Role",
   "BIO.ELITE": "Elite",
@@ -142,10 +142,10 @@
   "CHAT.HAS_PSYCHIC_PHENOMENA": "You must roll on the Psychic Phenomena table !",
   "CHAT.HAS_PSYCHIC_PHENOMENA_WITH_WARPCONDUIT": "You must roll on the Psychic Phenomena table at +30 !",
   "CHAT.CONTEXT.APPLY_DAMAGE": "Apply Damage",
-  "CHAT.CONTEXT.REROLL" : "Roll again with Fate",
+      "CHAT.CONTEXT.REROLL" : "Roll again with Stress",
   "CHAT.ACCURATE_HEADER": "Accurate Roll",
   "CHAT.DAMAGE_HEADER": "Damage Roll",
-  "CHAT.REROLL" : "Fate Reroll",
+      "CHAT.REROLL" : "Stress Reroll",
   "CHAT.AIMING" : "Aiming",
   "CHAT.ROLL_EVASION": "Roll Evasion",
   "CHAT.ROLL_DAMAGE" : "Roll Damage",
@@ -165,9 +165,7 @@
   "CONDITION.STUNNED": "Stunned",
   "CONDITION.UNCONSCIOUS": "Unconscious",
 
-  "CORRUPTION.HEADER": "Corruption",
-  "CORRUPTION.MALIGNANCY": "Malignancy",
-  "CORRUPTION.MUTATION": "Mutation",
+  
 
   "CRAFTSMANSHIP.POOR": "Poor",
   "CRAFTSMANSHIP.COMMON": "Common",
@@ -222,12 +220,12 @@
   "EXPERIENCE.SPENT_CHARACTERISTICS": "Spent on Characteristics",
   "EXPERIENCE.SPENT_SKILLS": "Spent on Skills",
   "EXPERIENCE.SPENT_TALENTS": "Spent on Talents",
-  "EXPERIENCE.SPENT_PSYCHIC_POWERS": "Spent on Psychic Powers",
+      "EXPERIENCE.SPENT_PSYCHIC_POWERS": "Spent on Psychic Abilities",
   "EXPERIENCE.SPENT_OTHER": "Spent on Other",
   "EXPERIENCE.TOTAL_SPENT": "Total Spent",
   "EXPERIENCE.TOTAL": "Total",
 
-  "FATE": "Fate",
+  "STRESS": "Stress",
   "FATIGUE": "Fatigue",
 
   "FEAR.HEADER": "Fear",
@@ -252,20 +250,20 @@
 
   "INITIATIVE": "Initiative",
 
-  "INSANITY.MENTAL_DISORDER": "Mental Disorder",
+  
 
   "TYPES.Item.ammunition" : "Ammunition",
   "TYPES.Item.aptitude" : "Aptitude",
-  "TYPES.Item.armour" : "Armour",
+      "TYPES.Item.armour" : "Armor",
   "TYPES.Item.criticalinjury" : "Critical Injury",
   "TYPES.Item.cybernetic" : "Cybernetic",
   "TYPES.Item.drug" : "Drug",
   "TYPES.Item.forcefield" : "Force Field",
   "TYPES.Item.gear" : "Gear",
-  "TYPES.Item.malignancy" : "Malignancy",
-  "TYPES.Item.mentaldisorder" : "Mental Disorder",
-  "TYPES.Item.mutation" : "Mutation",
-  "TYPES.Item.psychicpower" : "Psychic Power",
+  
+  
+  
+      "TYPES.Item.psychicpower" : "Psychic Ability",
   "TYPES.Item.specialability" : "Special Ability",
   "TYPES.Item.talent" : "Talent",
   "TYPES.Item.tool" : "Tool",
@@ -273,7 +271,7 @@
   "TYPES.Item.weapon" : "Weapon",
   "TYPES.Item.weaponmodification" : "Weapon Modification",
 
-  "MALIGNANCY.NAME": "Name",
+  
 
   "MENTAL_DISORDER.NAME": "Name",
 
@@ -282,7 +280,7 @@
   "MOVEMENT.CHARGE": "Charge",
   "MOVEMENT.RUN": "Run",
 
-  "MUTATION.NAME": "Name",
+  
 
   "NPC_TYPE.TROOP": "Troop",
   "NPC_TYPE.MASTER": "Master",
@@ -393,18 +391,18 @@
   "TRAIT.NAME": "Name",
   "TRAIT.BENEFIT": "Benefit",
 
-  "TITLE.INSANITY": "INSANITY",
+  
   "TITLE.CHARACTERISTICS": "CHARACTERISTICS",
-  "TITLE.CORRUPTION": "CORRUPTION",
+  
   "TITLE.SKILLS": "SKILLS",
   "TITLE.APTITUDES": "APTITUDES",
   "TITLE.EXPERIENCE": "EXPERIENCE",
   "TITLE.TALENTS": "TALENTS",
   "TITLE.TRAITS": "TRAITS",
   "TITLE.SPECIAL_ABILITIES": "SPECIAL ABILITIES",
-  "TITLE.PSYCHIC_POWERS": "PSYCHIC POWERS",
-  "TITLE.ARMOUR": "ARMOUR",
-  "TITLE.ARMOURS": "ARMOURS",
+      "TITLE.PSYCHIC_POWERS": "PSYCHIC ABILITIES",
+      "TITLE.ARMOUR": "ARMOR",
+      "TITLE.ARMOURS": "ARMORS",
   "TITLE.WOUNDS": "WOUNDS",
   "TITLE.MOVEMENT": "MOVEMENT",
   "TITLE.WEAPONS": "WEAPONS",

@@ -225,11 +225,11 @@ export class DarkHeresyItem extends Item {
     }
 
 
-    get isMentalDisorder() { return this.type === "mentalDisorder"; }
 
-    get isMalignancy() { return this.type === "malignancy"; }
 
-    get isMutation() { return this.type === "mutation"; }
+
+
+
 
     get isTalent() { return this.type === "talent"; }
 
@@ -246,6 +246,9 @@ export class DarkHeresyItem extends Item {
     get isWeapon() { return this.type === "weapon"; }
 
     get isArmour() { return this.type === "armour"; }
+
+    // Default to equipped when undefined so legacy items apply until explicitly unchecked
+    get isEquipped() { return this.system.equipped !== false; }
 
     get isGear() { return this.type === "gear"; }
 
